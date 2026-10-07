@@ -18,7 +18,7 @@ export default function SunMark({
 
   return (
     <span
-      className={`sun-character is-${resolved}`}
+      className={`sun-character ${resolved === 'compact' ? 'is-compact ' : ''}is-${resolved}`}
       aria-hidden="true"
     >
       <img
