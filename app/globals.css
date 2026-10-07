@@ -420,3 +420,12 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monos
   .chart-status-row { align-items: stretch; flex-direction: column; }
   .chart-refresh-button { width: 100%; }
 }
+
+.sun-character > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
