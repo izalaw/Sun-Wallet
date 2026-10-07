@@ -12,10 +12,10 @@ Carteira Ethereum web construída com **Next.js**, **Privy** e **viem**, criada 
 - Rede fixa em Sepolia
 - Saldo em ETH
 - Conversão visual do saldo para BRL ou USD
-- Cotação atual do ETH e variação de 24h (CoinGecko)
+- Cotação atual do ETH, variação de 24h e gráfico real de 7 dias (CoinGecko)
 - Preferência BRL/USD salva no navegador
 - Copiar endereço
-- Receber: exibe e copia o endereço da carteira
+- Receber: QR Code real, copiar e compartilhar o endereço público
 - Enviar ETH com validações, revisão e confirmação
 - Verificação de endereço zero, envio para si mesmo e saldo insuficiente
 - Reserva simples para gas ao usar “Máx.”
@@ -124,7 +124,7 @@ lib/
 
 ## Identidade e UX
 
-A SUN Wallet usa uma direção **Solar Minimal**: fundo creme, amarelo solar como ação principal, verde sálvia como apoio e interface desktop-first. O mascote solar foi desenvolvido para tornar a experiência mais amigável sem adicionar funcionalidades fictícias.
+A SUN Wallet usa uma direção **Solar Minimal**: fundo creme, amarelo solar como ação principal, verde sálvia como apoio e interface desktop-first. O sistema de mascote usa a versão **Friendly** completa em momentos principais, uma versão compacta no cabeçalho e estados próprios para carregamento e sucesso.
 
 A referência conceitual é o universo visual do projeto autoral **Solana Punk 2050**, especialmente a ideia de tecnologia em segundo plano e experiência humana em primeiro plano. A interface deste repositório, porém, foi desenhada especificamente para o escopo Ethereum + Privy + Sepolia.
 
@@ -136,8 +136,8 @@ A referência conceitual é o universo visual do projeto autoral **Solana Punk 2
 - [x] Sepolia como única rede suportada
 - [x] Saldo + atualização
 - [x] Envio de ETH + validações + confirmação
-- [x] Receber/copiar endereço
-- [x] BRL/USD + cotação ETH
+- [x] Receber com QR Code, copiar e compartilhar endereço
+- [x] BRL/USD + cotação ETH + gráfico real de 7 dias
 - [x] Logout
 - [x] Debug somente em development
 - [x] README + `.env.example`
