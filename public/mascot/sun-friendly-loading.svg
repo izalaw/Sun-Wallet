@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-label="Mascote Friendly em estado de carregamento">
+<defs>
+  <linearGradient id="body" x1=".22" y1=".08" x2=".78" y2=".94">
+    <stop offset="0" stop-color="#FFD95B"/><stop offset=".58" stop-color="#F6C344"/><stop offset="1" stop-color="#EAA82B"/>
+  </linearGradient>
+</defs>
+<path d="M105 31c-40 0-64 30-64 69v27c0 18 4 34 13 47 9 11 20 16 32 16 8 0 13-4 19-13 5 9 10 13 18 13 13 0 24-5 33-16 9-13 13-29 13-47v-27c0-39-24-69-64-69Z" fill="url(#body)"/>
+<path d="M43 97c-20 4-29 22-16 31 9 6 20 0 31-12" fill="#F1B633"/>
+<path d="M166 95c20 3 31-17 40-9 11 10-7 34-35 38" fill="#F1B633"/>
+<ellipse cx="87" cy="101" rx="5" ry="11" fill="#2B2B2B"/>
+<ellipse cx="124" cy="101" rx="5" ry="11" fill="#2B2B2B"/>
+<circle cx="211" cy="105" r="8" fill="#F6C344"/>
+<circle cx="239" cy="105" r="8" fill="#F6C344" opacity=".62"/>
+<circle cx="267" cy="105" r="8" fill="#F6C344" opacity=".34"/>
+</svg>
