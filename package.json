@@ -11,6 +11,7 @@
   "dependencies": {
     "@privy-io/react-auth": "latest",
     "next": "latest",
+    "qrcode.react": "^4.2.0",
     "react": "latest",
     "react-dom": "latest",
     "viem": "latest"
