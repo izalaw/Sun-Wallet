@@ -380,3 +380,43 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monos
   .chart-meta-row { flex-direction: column; gap: 3px; }
   .review-line { grid-template-columns: 1fr; gap: 4px; }
 }
+
+
+.chart-status-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+}
+.chart-status-row > div {
+  display: grid;
+  gap: 2px;
+  color: var(--muted);
+  font-size: .62rem;
+  line-height: 1.35;
+}
+.chart-refresh-button,
+.chart-retry {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 9px;
+  padding: 7px 10px;
+  font-size: .68rem;
+  font-weight: 750;
+}
+.chart-refresh-button:hover,
+.chart-retry:hover { background: #fff8e8; }
+.chart-soft-error {
+  color: var(--danger);
+  font-size: .64rem;
+  line-height: 1.4;
+  margin: 8px 0 0;
+}
+.chart-unavailable p { margin: 0 0 10px; }
+
+@media (max-width: 680px) {
+  .chart-status-row { align-items: stretch; flex-direction: column; }
+  .chart-refresh-button { width: 100%; }
+}
