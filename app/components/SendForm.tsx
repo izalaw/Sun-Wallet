@@ -134,7 +134,7 @@ export default function SendForm({
 
         {stage === 'edit' && (
           <>
-            <div className="modal-mark"><SunMark /></div>
+            <div className="modal-mark modal-friendly"><SunMark /></div>
             <p className="eyebrow">Enviar ETH</p>
             <h2 id="send-title">Para quem você quer enviar?</h2>
 
@@ -153,31 +153,54 @@ export default function SendForm({
               <small className="conversion-hint">{fiatAmount === null ? 'O equivalente aparecerá aqui.' : `≈ ${money(fiatAmount, currency)}`}</small>
             </label>
 
-            <p className="network-note">Uma pequena taxa da rede Sepolia é paga em ETH.</p>
+            <p className="network-note">Rede: Sepolia · uma pequena taxa da rede é paga em ETH de teste.</p>
             {error && <p className="inline-error">{error}</p>}
 
             <div className="button-row">
               <button className="secondary-button" onClick={reset}>Cancelar</button>
-              <button className="primary-button" onClick={handleReview}>Continuar</button>
+              <button className="primary-button" onClick={handleReview}>Revisar envio</button>
             </div>
           </>
         )}
 
         {stage === 'review' && (
           <>
-            <div className="modal-mark"><SunMark /></div>
+            <div className="modal-mark modal-friendly"><SunMark /></div>
             <p className="eyebrow">Revisão</p>
-            <h2 id="send-title">Está tudo certo?</h2>
+            <h2 id="send-title">Confira antes de enviar</h2>
+
             <div className="review-box">
-              <span>Você vai enviar</span>
-              <strong>{amount} ETH</strong>
-              {fiatAmount !== null && <b>≈ {money(fiatAmount, currency)}</b>}
+              <div className="review-line">
+                <span>Valor</span>
+                <div>
+                  <strong>{amount} ETH</strong>
+                  {fiatAmount !== null && <b>≈ {money(fiatAmount, currency)}</b>}
+                </div>
+              </div>
+
               <div className="review-divider" />
-              <span>Para</span>
-              <code>{isAddress(normalizedTo) ? shorten(getAddress(normalizedTo)) : normalizedTo}</code>
-              <small>{normalizedTo}</small>
+
+              <div className="review-line">
+                <span>Destino</span>
+                <div>
+                  <code>{isAddress(normalizedTo) ? shorten(getAddress(normalizedTo)) : normalizedTo}</code>
+                  <small>{normalizedTo}</small>
+                </div>
+              </div>
+
+              <div className="review-divider" />
+
+              <div className="review-line">
+                <span>Rede</span>
+                <div>
+                  <strong className="review-network">Sepolia testnet</strong>
+                  <small>A taxa final é calculada pela rede no momento da confirmação.</small>
+                </div>
+              </div>
             </div>
+
             <p className="warning-text">Confira o endereço com atenção. Transações em blockchain não podem ser desfeitas.</p>
+
             <div className="button-row">
               <button className="secondary-button" onClick={() => setStage('edit')}>Voltar</button>
               <button className="primary-button" onClick={() => void handleConfirm()}>Confirmar envio</button>
@@ -187,7 +210,7 @@ export default function SendForm({
 
         {stage === 'sending' && (
           <div className="transaction-state">
-            <SunMark />
+            <SunMark variant="loading" />
             <div className="loader" />
             <h2>Confirmando sua transação…</h2>
             <p>A Privy assina o envio e a SUN aguarda a confirmação na Sepolia.</p>
@@ -196,10 +219,10 @@ export default function SendForm({
 
         {stage === 'success' && (
           <div className="transaction-state success-state">
-            <SunMark />
+            <SunMark variant="success" />
             <div className="success-icon">✓</div>
             <h2>Pronto! Seu ETH foi enviado.</h2>
-            <p>A transação já foi confirmada na Sepolia e seu saldo foi atualizado.</p>
+            <p>A transação foi confirmada na Sepolia e seu saldo foi atualizado.</p>
             <a className="etherscan-link" href={`https://sepolia.etherscan.io/tx/${txHash}`} target="_blank" rel="noreferrer">Ver transação no Etherscan ↗</a>
             <button className="secondary-button full" onClick={reset}>Voltar para a carteira</button>
           </div>
