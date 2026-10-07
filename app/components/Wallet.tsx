@@ -3,9 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useWallets } from '@privy-io/react-auth';
 import { formatEther } from 'viem';
+import { QRCodeSVG } from 'qrcode.react';
 import { publicClient } from '@/lib/client';
 import SendForm from './SendForm';
 import SunMark from './SunMark';
+import EthChart from './EthChart';
 
 type Currency = 'BRL' | 'USD';
 
@@ -48,6 +50,7 @@ export default function Wallet() {
   const [currency, setCurrency] = useState<Currency>('BRL');
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
   const [readError, setReadError] = useState('');
   const [priceError, setPriceError] = useState(false);
   const [receiveOpen, setReceiveOpen] = useState(false);
@@ -106,7 +109,33 @@ export default function Wallet() {
     if (!wallet?.address) return;
     await navigator.clipboard.writeText(wallet.address);
     setCopied(true);
-    window.setTimeout(() => setCopied(false), 1500);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
+
+  async function shareAddress() {
+    if (!wallet?.address) return;
+
+    const shareText = `Meu endereço SUN Wallet para receber ETH de teste na rede Sepolia: ${wallet.address}`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'SUN Wallet · Receber ETH',
+          text: shareText,
+        });
+        setShared(true);
+        window.setTimeout(() => setShared(false), 1600);
+      } else {
+        await navigator.clipboard.writeText(shareText);
+        setShared(true);
+        window.setTimeout(() => setShared(false), 1600);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') return;
+      await navigator.clipboard.writeText(shareText);
+      setShared(true);
+      window.setTimeout(() => setShared(false), 1600);
+    }
   }
 
   const ethAmount = balance === null ? null : Number(formatEther(balance));
@@ -121,7 +150,7 @@ export default function Wallet() {
   if (!wallet) {
     return (
       <section className="wallet-card empty-wallet">
-        <SunMark />
+        <SunMark variant="loading" />
         <p className="eyebrow">Sua carteira</p>
         <h2>Criando sua carteira…</h2>
         <p className="muted">A Privy ainda está preparando a carteira embutida deste usuário.</p>
@@ -143,6 +172,7 @@ export default function Wallet() {
               <div className="fiat-balance">
                 {fiatBalance === null ? 'Cotação indisponível' : `≈ ${money(fiatBalance, currency)}`}
               </div>
+              <p className="balance-disclaimer">Conversão informativa com base no preço de mercado do ETH.</p>
             </div>
             <div className="currency-switch" aria-label="Moeda de visualização">
               <button className={currency === 'BRL' ? 'active' : ''} onClick={() => chooseCurrency('BRL')}>BRL</button>
@@ -169,7 +199,7 @@ export default function Wallet() {
 
           <div className="address-block">
             <div>
-              <span className="field-label">Seu endereço</span>
+              <span className="field-label">Seu endereço público</span>
               <code title={wallet.address}>{shorten(wallet.address)}</code>
             </div>
             <button className="copy-button" onClick={() => void copyAddress()}>
@@ -189,14 +219,18 @@ export default function Wallet() {
               </div>
               <span className="eth-badge">ETH</span>
             </div>
+
             {selectedChange !== null && (
               <p className={selectedChange >= 0 ? 'market-change positive' : 'market-change negative'}>
                 {selectedChange >= 0 ? '↑' : '↓'} {Math.abs(selectedChange).toFixed(2)}% nas últimas 24h
               </p>
             )}
+
+            <EthChart currency={currency} />
+
             {priceError && <p className="mini-value">Cotação temporariamente indisponível. A carteira continua funcionando normalmente.</p>}
             {price?.updatedAt && (
-              <p className="price-update">Atualizada às {new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(price.updatedAt)}</p>
+              <p className="price-update">Preço atualizado às {new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(price.updatedAt)}</p>
             )}
           </section>
 
@@ -214,13 +248,42 @@ export default function Wallet() {
       {receiveOpen && (
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setReceiveOpen(false)}>
           <section className="modal-card receive-modal" role="dialog" aria-modal="true" aria-labelledby="receive-title" onMouseDown={(event) => event.stopPropagation()}>
-            <div className="modal-mark"><SunMark /></div>
+            <div className="modal-mark receive-mascot"><SunMark /></div>
             <button className="close-button modal-close" onClick={() => setReceiveOpen(false)} aria-label="Fechar">×</button>
             <p className="eyebrow">Receber ETH</p>
             <h2 id="receive-title">Compartilhe seu endereço</h2>
-            <p className="muted">Use este endereço apenas na rede Sepolia para os testes deste projeto.</p>
-            <code className="full-address">{wallet.address}</code>
-            <button className="primary-button full" onClick={() => void copyAddress()}>{copied ? 'Endereço copiado ✓' : 'Copiar endereço'}</button>
+            <p className="muted">Use este endereço somente para receber ETH de teste na rede Sepolia.</p>
+
+            <div className="receive-grid">
+              <div className="qr-card" aria-label="QR Code do endereço da carteira">
+                <QRCodeSVG
+                  value={wallet.address}
+                  size={164}
+                  bgColor="#fffdf8"
+                  fgColor="#282b29"
+                  level="M"
+                  marginSize={2}
+                  title="Endereço SUN Wallet na rede Sepolia"
+                />
+              </div>
+
+              <div className="receive-address-panel">
+                <span className="field-label">Seu endereço público</span>
+                <code className="full-address">{wallet.address}</code>
+                <span className="receive-network-label"><span className="status-dot" /> Rede: Sepolia</span>
+              </div>
+            </div>
+
+            <div className="receive-actions">
+              <button className="secondary-button" onClick={() => void copyAddress()}>
+                {copied ? 'Endereço copiado ✓' : 'Copiar endereço'}
+              </button>
+              <button className="primary-button" onClick={() => void shareAddress()}>
+                {shared ? 'Compartilhado ✓' : 'Compartilhar'}
+              </button>
+            </div>
+
+            <p className="warning-text">Não envie ETH de mainnet ou outros ativos para este endereço durante o teste.</p>
           </section>
         </div>
       )}
