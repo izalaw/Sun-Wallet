@@ -76,7 +76,7 @@ export default function Wallet() {
   const refreshPrice = useCallback(async () => {
     try {
       setPriceError(false);
-      const response = await fetch('/api/eth-price', { cache: 'no-store' });
+      const response = await fetch(`/api/eth-price?t=${Date.now()}`, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
       if (!response.ok) throw new Error('price');
       setPrice(await response.json());
     } catch {
