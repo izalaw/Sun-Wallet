@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Mascote Friendly da SUN Wallet">
+<defs>
+  <linearGradient id="body" x1="0.22" y1="0.08" x2="0.78" y2="0.94">
+    <stop offset="0" stop-color="#FFD95B"/>
+    <stop offset=".58" stop-color="#F6C344"/>
+    <stop offset="1" stop-color="#EAA82B"/>
+  </linearGradient>
+  <radialGradient id="light" cx=".35" cy=".18" r=".8">
+    <stop offset="0" stop-color="#FFF1AE" stop-opacity=".9"/>
+    <stop offset=".5" stop-color="#FFD95B" stop-opacity=".12"/>
+    <stop offset="1" stop-color="#EAA82B" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+    <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#9A6E13" flood-opacity=".16"/>
+  </filter>
+</defs>
+<g filter="url(#shadow)">
+  <path d="M120 30c-46 0-73 34-73 78v31c0 20 5 39 15 53 10 13 23 18 37 18 9 0 15-5 21-15 6 10 12 15 21 15 14 0 27-5 37-18 10-14 15-33 15-53v-31c0-44-27-78-73-78Z" fill="url(#body)"/>
+  <path d="M48 105c-24 4-34 25-19 36 10 7 23 0 37-14" fill="#F1B633"/>
+  <path d="M191 102c24 3 37-20 48-10 13 12-8 39-41 44" fill="#F1B633"/>
+  <path d="M120 32c-37 0-65 25-71 60 13-29 40-46 72-46 31 0 58 18 70 47-6-35-34-61-71-61Z" fill="url(#light)"/>
+  <ellipse cx="97" cy="108" rx="6" ry="13" fill="#2B2B2B"/>
+  <ellipse cx="143" cy="108" rx="6" ry="13" fill="#2B2B2B"/>
+</g>
+</svg>
