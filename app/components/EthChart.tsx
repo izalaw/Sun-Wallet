@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type Currency = 'BRL' | 'USD';
 type PricePoint = { timestamp: number; value: number };
@@ -9,7 +9,7 @@ function money(value: number, currency: Currency) {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency,
-    maximumFractionDigits: currency === 'BRL' ? 2 : 2,
+    maximumFractionDigits: 2,
   }).format(value);
 }
 
@@ -17,32 +17,57 @@ export default function EthChart({ currency }: { currency: Currency }) {
   const [points, setPoints] = useState<PricePoint[]>([]);
   const [error, setError] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [fetchedAt, setFetchedAt] = useState<number | null>(null);
+  const [lastPointAt, setLastPointAt] = useState<number | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const load = useCallback(async () => {
+    try {
+      setRefreshing(true);
+      setError(false);
+      const response = await fetch(
+        `/api/eth-chart?currency=${currency}&t=${Date.now()}`,
+        {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' },
+        },
+      );
+
+      if (!response.ok) throw new Error('chart');
+
+      const data = await response.json();
+      setPoints(data.prices ?? []);
+      setFetchedAt(data.fetchedAt ?? Date.now());
+      setLastPointAt(data.lastPointAt ?? null);
+    } catch {
+      setError(true);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [currency]);
 
   useEffect(() => {
-    let active = true;
-
-    async function load() {
-      try {
-        setError(false);
-        const response = await fetch(`/api/eth-chart?currency=${currency}`, { cache: 'no-store' });
-        if (!response.ok) throw new Error('chart');
-        const data = await response.json();
-        if (active) setPoints(data.prices ?? []);
-      } catch {
-        if (active) setError(true);
-      }
-    }
-
     void load();
-    const timer = window.setInterval(() => void load(), 5 * 60_000);
-    return () => {
-      active = false;
-      window.clearInterval(timer);
+
+    const timer = window.setInterval(() => void load(), 60_000);
+    const onFocus = () => void load();
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') void load();
     };
-  }, [currency]);
+
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [load]);
 
   const chart = useMemo(() => {
     if (points.length < 2) return null;
+
     const width = 560;
     const height = 170;
     const padX = 8;
@@ -63,13 +88,19 @@ export default function EthChart({ currency }: { currency: Currency }) {
       .join(' ');
 
     const area = `${path} L ${coordinates.at(-1)!.x.toFixed(2)} ${height} L ${coordinates[0].x.toFixed(2)} ${height} Z`;
+
     return { width, height, min, max, coordinates, path, area };
   }, [points]);
 
   const hovered = hoverIndex !== null && chart ? chart.coordinates[hoverIndex] : null;
 
   if (error && !chart) {
-    return <p className="chart-unavailable">Histórico temporariamente indisponível.</p>;
+    return (
+      <div className="chart-unavailable">
+        <p>Histórico temporariamente indisponível.</p>
+        <button className="chart-retry" onClick={() => void load()}>Tentar novamente</button>
+      </div>
+    );
   }
 
   if (!chart) {
@@ -97,7 +128,12 @@ export default function EthChart({ currency }: { currency: Currency }) {
             style={{ left: `${(hovered.x / chart.width) * 100}%` }}
           >
             <strong>{money(hovered.value, currency)}</strong>
-            <span>{new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).format(hovered.timestamp)}</span>
+            <span>{new Intl.DateTimeFormat('pt-BR', {
+              day: '2-digit',
+              month: 'short',
+              hour: '2-digit',
+              minute: '2-digit',
+            }).format(hovered.timestamp)}</span>
           </div>
         )}
 
@@ -116,16 +152,74 @@ export default function EthChart({ currency }: { currency: Currency }) {
             </linearGradient>
           </defs>
           <path d={chart.area} fill="url(#ethArea)" />
-          <path d={chart.path} fill="none" stroke="#5C8B70" strokeWidth="3" vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d={chart.path}
+            fill="none"
+            stroke="#5C8B70"
+            strokeWidth="3"
+            vectorEffect="non-scaling-stroke"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
           {hovered && (
             <>
-              <line x1={hovered.x} x2={hovered.x} y1="0" y2={chart.height} stroke="#AFA898" strokeDasharray="4 5" vectorEffect="non-scaling-stroke" />
-              <circle cx={hovered.x} cy={hovered.y} r="5" fill="#FFFDF8" stroke="#5C8B70" strokeWidth="3" vectorEffect="non-scaling-stroke" />
+              <line
+                x1={hovered.x}
+                x2={hovered.x}
+                y1="0"
+                y2={chart.height}
+                stroke="#AFA898"
+                strokeDasharray="4 5"
+                vectorEffect="non-scaling-stroke"
+              />
+              <circle
+                cx={hovered.x}
+                cy={hovered.y}
+                r="5"
+                fill="#FFFDF8"
+                stroke="#5C8B70"
+                strokeWidth="3"
+                vectorEffect="non-scaling-stroke"
+              />
             </>
           )}
         </svg>
       </div>
-      <p className="chart-source">Dados reais de mercado · atualização aproximada a cada 5 min</p>
+
+      <div className="chart-status-row">
+        <div>
+          <span>Fonte: CoinGecko</span>
+          {fetchedAt && (
+            <span>
+              Consulta: {new Intl.DateTimeFormat('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+              }).format(fetchedAt)}
+            </span>
+          )}
+          {lastPointAt && (
+            <span>
+              Último ponto: {new Intl.DateTimeFormat('pt-BR', {
+                day: '2-digit',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+              }).format(lastPointAt)}
+            </span>
+          )}
+        </div>
+
+        <button
+          className="chart-refresh-button"
+          onClick={() => void load()}
+          disabled={refreshing}
+        >
+          {refreshing ? 'Atualizando…' : 'Atualizar'}
+        </button>
+      </div>
+
+      {error && <p className="chart-soft-error">Não foi possível atualizar agora; exibindo o último histórico carregado.</p>}
     </div>
   );
 }
