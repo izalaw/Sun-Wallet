@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Ícone Friendly da SUN Wallet">
+<defs>
+  <linearGradient id="body" x1=".2" y1=".08" x2=".8" y2=".94">
+    <stop offset="0" stop-color="#FFD95B"/><stop offset=".58" stop-color="#F6C344"/><stop offset="1" stop-color="#EAA82B"/>
+  </linearGradient>
+</defs>
+<path d="M80 26c-37 0-59 27-59 59 0 34 25 55 59 55s59-21 59-55c0-32-22-59-59-59Z" fill="url(#body)"/>
+<path d="M26 78c-18 3-24 17-14 24 8 5 16 0 25-9" fill="#F1B633"/>
+<path d="M134 78c18 3 24 17 14 24-8 5-16 0-25-9" fill="#F1B633"/>
+<ellipse cx="61" cy="82" rx="4.5" ry="10" fill="#2B2B2B"/>
+<ellipse cx="99" cy="82" rx="4.5" ry="10" fill="#2B2B2B"/>
+</svg>
