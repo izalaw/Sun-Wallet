@@ -1,17 +1,57 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import Wallet from './components/Wallet';
 import DebugPanel from './components/DebugPanel';
 import SunMark from './components/SunMark';
 
+const PRIVY_READY_TIMEOUT = 8000;
+
 export default function Home() {
   const { ready, authenticated, login, logout, user } = usePrivy();
+  const [startupTimedOut, setStartupTimedOut] = useState(false);
+
+  useEffect(() => {
+    if (ready) {
+      setStartupTimedOut(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setStartupTimedOut(true);
+    }, PRIVY_READY_TIMEOUT);
+
+    return () => window.clearTimeout(timer);
+  }, [ready]);
+
+  function retryStartup() {
+    setStartupTimedOut(false);
+    window.location.reload();
+  }
 
   if (!ready) {
+    if (startupTimedOut) {
+      return (
+        <main className="center-screen startup-recovery">
+          <SunMark variant="thinking" />
+          <h1>A carteira demorou para iniciar.</h1>
+          <p className="muted">
+            Isso pode acontecer quando o navegador interrompe a inicialização da sessão. Tente carregar a SUN novamente.
+          </p>
+          <button className="primary-button" onClick={retryStartup}>
+            Tentar novamente
+          </button>
+          <p className="footnote">
+            Se você abriu o link dentro de outro aplicativo, tente também abrir diretamente no Safari ou Chrome.
+          </p>
+        </main>
+      );
+    }
+
     return (
       <main className="center-screen">
-        <SunMark />
+        <SunMark variant="loading" />
         <div className="loader" aria-label="Carregando" />
         <p className="muted">Preparando sua carteira…</p>
       </main>
