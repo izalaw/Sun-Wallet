@@ -210,7 +210,7 @@ export default function SendForm({
 
         {stage === 'sending' && (
           <div className="transaction-state">
-            <SunMark variant="loading" />
+            <SunMark />
             <div className="loader" />
             <h2>Confirmando sua transação…</h2>
             <p>A Privy assina o envio e a SUN aguarda a confirmação na Sepolia.</p>
