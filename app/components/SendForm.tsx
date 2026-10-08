@@ -134,7 +134,7 @@ export default function SendForm({
 
         {stage === 'edit' && (
           <>
-            <div className="modal-mark modal-friendly"><SunMark /></div>
+            <div className="modal-mark modal-friendly"><SunMark variant={error ? 'thinking' : 'full'} /></div>
             <p className="eyebrow">Enviar ETH</p>
             <h2 id="send-title">Para quem você quer enviar?</h2>
 
@@ -210,7 +210,7 @@ export default function SendForm({
 
         {stage === 'sending' && (
           <div className="transaction-state">
-            <SunMark />
+            <SunMark variant="loading" />
             <div className="loader" />
             <h2>Confirmando sua transação…</h2>
             <p>A Privy assina o envio e a SUN aguarda a confirmação na Sepolia.</p>
