@@ -17,68 +17,70 @@ O mascote é **Friendly**, simples e reconhecível. Ele deve transmitir proximid
 - sem olhos grandes de estilo anime;
 - não alterar tamanho ou distância entre os olhos entre estados equivalentes.
 
+## Mapa oficial de estados
+
+| Situação | Estado | Asset |
+| --- | --- | --- |
+| Login, dashboard e contexto neutro | normal | `sun-friendly-full.webp` |
+| Header e espaços pequenos | compacto | `sun-friendly-compact.webp` |
+| Preenchimento do envio | normal | `sun-friendly-full.webp` |
+| Revisão antes de enviar | normal | `sun-friendly-full.webp` |
+| Confirmando a transação | loading | `sun-friendly-loading.webp` |
+| Transação concluída | feliz / success | `sun-friendly-success.webp` |
+| Endereço inválido | pensando | `sun-friendly-loading.webp` |
+| Envio para a própria carteira | pensando | `sun-friendly-loading.webp` |
+| Valor inválido ou zero | pensando | `sun-friendly-loading.webp` |
+| Saldo insuficiente | pensando | `sun-friendly-loading.webp` |
+| Transação cancelada ou falhou | pensando | `sun-friendly-loading.webp` |
+| Criação da carteira em andamento | loading | `sun-friendly-loading.webp` |
+| App icon / favicon | icon | `sun-friendly-icon.webp` |
+
+## Linguagem emocional
+
+- **Normal:** a SUN está disponível e neutra.
+- **Loading:** algo está acontecendo e o usuário só precisa aguardar.
+- **Feliz:** a ação terminou corretamente.
+- **Pensando:** algo precisa ser revisto; a interface deve orientar, não alarmar.
+
+O estado **pensando** é propositalmente amigável. Ele não deve usar ícones de erro agressivos, vermelho excessivo ou expressão triste.
+
 ## Assets oficiais
 
-### `sun-friendly-full.svg`
+### `sun-friendly-full.webp`
 Versão completa principal.
 
-**Usar em:**
-- login;
-- onboarding;
-- boas-vindas;
-- telas vazias;
-- comunicação principal da marca.
+Usar em login, onboarding, boas-vindas, revisão e comunicação principal da marca.
 
-### `sun-friendly-compact.svg`
+### `sun-friendly-compact.webp`
 Mesma identidade em proporção reduzida.
 
-**Usar em:**
-- cards;
-- modais;
-- áreas médias da interface;
-- elementos auxiliares em que a versão principal ocuparia espaço demais.
+Usar no header, cards pequenos e elementos auxiliares.
 
-### `sun-friendly-icon.svg`
-Símbolo compacto do personagem.
+### `sun-friendly-icon.webp`
+Símbolo compacto.
 
-**Usar em:**
-- app icon;
-- favicon;
-- avatar;
-- espaços muito pequenos;
-- navegação que exija leitura imediata em tamanho reduzido.
+Usar em app icon, favicon e espaços muito pequenos.
 
-Não usar esta versão como substituta do mascote completo em telas de destaque.
+### `sun-friendly-success.webp`
+Estado feliz.
 
-### `sun-friendly-success.svg`
-Estado positivo do mesmo personagem, acompanhado de raios discretos.
+Usar somente quando uma ação foi concluída com sucesso, especialmente após a confirmação de uma transação.
 
-**Usar em:**
-- transação confirmada;
-- carteira criada;
-- ação concluída com sucesso.
+### `sun-friendly-loading.webp`
+Estado com indicador de espera/pensamento.
 
-Não usar como decoração permanente.
-
-### `sun-friendly-loading.svg`
-Estado de espera com indicador de três pontos.
-
-**Usar em:**
-- criação da carteira;
-- confirmação de transação;
-- carregamentos relevantes que precisam de contexto humano.
-
-Para carregamentos muito curtos, preferir apenas um loader simples.
+Usar como **loading** enquanto a aplicação processa algo e como **thinking** quando existe um problema que o usuário precisa corrigir.
 
 ## Regras de consistência
 
 1. Manter corpo, cor e olhos consistentes.
 2. Não esticar ou distorcer o personagem.
 3. Não substituir a cor principal por cores aleatórias.
-4. Não adicionar boca, pupilas, acessórios ou expressões sem criar uma nova versão oficial.
+4. Não adicionar boca, pupilas ou acessórios sem criar uma nova versão oficial.
 5. Manter área de respiro em torno do mascote.
 6. Evitar sombras excessivas, neon e estética cripto/cassino.
-7. Em tamanhos muito pequenos, usar a versão `icon` em vez de reduzir a versão completa indefinidamente.
+7. Em tamanhos muito pequenos, usar a versão `icon`.
+8. Erros devem parecer orientativos, não punitivos.
 
 ## Paleta do mascote
 
@@ -93,10 +95,12 @@ Para carregamentos muito curtos, preferir apenas um loader simples.
 - Login: `full`
 - Header: `compact`
 - Criando carteira: `loading`
-- Modal de envio: `full`
-- Modal de receber: `full`
+- Modal de envio sem erro: `full`
+- Modal de envio com erro: `thinking`
+- Revisão: `full`
 - Confirmando transação: `loading`
 - Transação concluída: `success`
+- Modal de receber: `full`
 - App icon / favicon: `icon`
 
 ## Arquivos
