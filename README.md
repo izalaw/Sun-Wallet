@@ -1,4 +1,4 @@
-# SUN Wallet ☀️
+# SUN Wallet
 
 **Sua carteira digital, sem complicação.**
 
@@ -9,7 +9,7 @@ A aplicação combina **Next.js**, **Privy** e **viem** para oferecer login por 
 > **Technology in the background. People in the foreground.**  
 > **Tecnologia em segundo plano. Pessoas em primeiro plano.**
 
-## ✨ A ideia por trás da SUN
+## A ideia por trás da SUN
 
 O nome **SUN** nasce de uma visão de futuro inspirada na estética **solarpunk / solar futurista**: uma perspectiva mais positiva, humana e sustentável sobre tecnologia.
 
@@ -21,14 +21,14 @@ Em vez de começar por seed phrase, extensão de navegador, RPC, gas ou jargões
 
 A tecnologia continua existindo — carteira, blockchain, assinatura, transação, rede e explorer — mas aparece apenas quando ajuda o usuário a entender o que está acontecendo.
 
-## 🚀 Demo
+## Demo
 
 **Aplicação publicada:**  
 https://sun-wallet-bay.vercel.app/
 
 A SUN funciona exclusivamente na **Sepolia testnet**. O ETH utilizado não possui valor real.
 
-## 🧪 Experimente a carteira
+## Experimente a carteira
 
 Uma pequena atividade prática para entender o fluxo de uma carteira Web3:
 
@@ -55,7 +55,7 @@ Ao completar esse fluxo, você exercita na prática alguns conceitos fundamentai
 - explorer;
 - diferença entre a interface de uma carteira e a infraestrutura que funciona por trás dela.
 
-## 🌱 O que a experiência tenta demonstrar
+## O que a experiência tenta demonstrar
 
 A SUN não busca apenas provar que uma transferência funciona.
 
@@ -65,7 +65,7 @@ A hipótese é simples: muitas barreiras de entrada não estão apenas na tecnol
 
 Por isso, a interface evita estética de trading, neon, excesso de informação e linguagem excessivamente técnica. A direção visual segue uma proposta **Solar Minimal**, com tons creme, amarelo solar, verde sálvia e um mascote Friendly que ajuda a comunicar estados da aplicação de forma mais humana.
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 - Login por e-mail com Privy
 - Carteira Ethereum embutida criada automaticamente
@@ -91,7 +91,7 @@ Por isso, a interface evita estética de trading, neon, excesso de informação 
 - Painel de debug somente em desenvolvimento
 - Interface desktop-first com fallback responsivo
 
-## 🧠 Estados do mascote
+## Estados do mascote
 
 O mascote Friendly funciona como parte da linguagem da interface:
 
@@ -103,7 +103,7 @@ O mascote Friendly funciona como parte da linguagem da interface:
 
 A proposta é comunicar estados sem transformar erro em punição visual.
 
-## 🛠️ Stack
+## Stack
 
 - Next.js (App Router)
 - React
@@ -113,7 +113,7 @@ A proposta é comunicar estados sem transformar erro em punição visual.
 - CoinGecko Simple Price API
 - Vercel
 
-## 🧭 Como funciona
+## Como funciona
 
 ```text
 E-mail
@@ -131,7 +131,7 @@ Etherscan
 
 O usuário interage com uma interface simples, enquanto autenticação, carteira e infraestrutura blockchain permanecem em segundo plano.
 
-## 💻 Rodar localmente
+## Rodar localmente
 
 ### 1. Instale as dependências
 
@@ -166,7 +166,7 @@ npm run dev
 
 Abra `http://localhost:3000`.
 
-## ✅ Teste end-to-end
+## Teste end-to-end
 
 O fluxo principal foi validado em Sepolia com duas contas distintas:
 
@@ -183,7 +183,7 @@ https://sepolia.etherscan.io/tx/0xcecd1564d9bd04aa9d54b7d570498748043894689c02f3
 
 > Este teste utiliza somente ETH de testnet, sem valor real.
 
-## 🧪 Casos de teste sugeridos
+## Casos de teste sugeridos
 
 Além do fluxo principal, vale testar:
 
@@ -196,7 +196,7 @@ Além do fluxo principal, vale testar:
 - cancelamento da assinatura;
 - atualização do saldo após confirmação.
 
-## 📁 Estrutura principal
+## Estrutura principal
 
 ```text
 app/
@@ -215,7 +215,7 @@ lib/
 └── client.ts
 ```
 
-## 🔐 Segurança e escopo
+## Segurança e escopo
 
 - A aplicação usa **Sepolia testnet**, nunca mainnet.
 - O painel de debug só renderiza em `development`.
@@ -223,7 +223,7 @@ lib/
 - ETH Sepolia não possui valor real.
 - O projeto é experimental, educacional e de portfólio.
 
-## 🎨 Identidade
+## Identidade
 
 A SUN Wallet segue uma direção **Solar Minimal**: fundo creme, amarelo solar como ação principal, verde sálvia como apoio e uma interface visualmente calma.
 
@@ -231,7 +231,7 @@ A referência conceitual vem de uma visão **solar futurista / solarpunk**, em q
 
 A aplicação traduz essa ideia para um produto financeiro experimental: **menos fricção, menos intimidação e mais compreensão.**
 
-## 📌 Status do projeto
+## Status do projeto
 
 - [x] Next.js + TypeScript
 - [x] PrivyProvider
