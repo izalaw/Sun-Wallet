@@ -9,19 +9,19 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@privy-io/react-auth": "latest",
-    "next": "latest",
-    "qrcode.react": "^4.2.0",
-    "react": "latest",
-    "react-dom": "latest",
-    "viem": "latest"
+    "@privy-io/react-auth": "3.47.0",
+    "next": "16.4.0",
+    "qrcode.react": "4.2.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "viem": "2.57.3"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
-    "typescript": "latest"
+    "@types/node": "26.6.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "10.10.0",
+    "eslint-config-next": "16.4.0",
+    "typescript": "7.0.2"
   }
 }
