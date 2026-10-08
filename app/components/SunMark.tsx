@@ -1,11 +1,11 @@
 type Variant = 'full' | 'compact' | 'success' | 'loading' | 'thinking';
 
 const assets: Record<Variant, string> = {
-  full: '/mascot/sun-friendly-full.webp',
-  compact: '/mascot/sun-friendly-compact.webp',
-  success: '/mascot/sun-friendly-success.webp',
-  loading: '/mascot/sun-friendly-loading.webp',
-  thinking: '/mascot/sun-friendly-loading.webp',
+  full: '/mascot/sun-friendly-full.svg',
+  compact: '/mascot/sun-friendly-compact.svg',
+  success: '/mascot/sun-friendly-success.svg',
+  loading: '/mascot/sun-friendly-loading.svg',
+  thinking: '/mascot/sun-friendly-loading.svg',
 };
 
 export default function SunMark({
