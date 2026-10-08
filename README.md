@@ -85,6 +85,23 @@ Abra `http://localhost:3000`.
    - valor zero;
    - valor maior que o saldo.
 
+## Evidência de teste end-to-end
+
+O fluxo principal foi validado em Sepolia com duas contas distintas:
+
+- login por e-mail em duas sessões;
+- duas embedded wallets diferentes;
+- conta A financiada com ETH Sepolia;
+- envio de `0.001 ETH` da conta A para a conta B;
+- confirmação da transação;
+- atualização do saldo da conta B após o recebimento;
+- persistência do saldo após recarregar a aplicação.
+
+**Transação de teste:**  
+https://sepolia.etherscan.io/tx/0xcecd1564d9bd04aa9d54b7d570498748043894689c02f3b0d96260390550d348
+
+> Este teste utiliza somente ETH de testnet, sem valor real.
+
 ## Deploy na Vercel
 
 1. Importe este repositório na Vercel.
@@ -141,6 +158,6 @@ A referência conceitual é o universo visual do projeto autoral **Solana Punk 2
 - [x] Logout
 - [x] Debug somente em development
 - [x] README + `.env.example`
-- [ ] Teste end-to-end com duas contas (depende das credenciais Privy e ETH Sepolia)
+- [x] Teste end-to-end com duas contas em Sepolia
 - [ ] Prints/GIF da aplicação rodando
 - [ ] Deploy Vercel
